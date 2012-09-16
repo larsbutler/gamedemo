@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import com.larsbutler.gamedemo.core.GameState;
 import com.larsbutler.gamedemo.core.Kernel;
 import com.larsbutler.gamedemo.models.Level;
+import com.larsbutler.gamedemo.models.Player;
 
 public class GameCanvas extends Canvas {
 
@@ -55,6 +56,8 @@ public class GameCanvas extends Canvas {
         level.render(g, alpha);
 
         // TODO: render the player
+        Player p = gs.getPlayer();
+        p.render(g, alpha);
 
         // draw HUD
         g.setColor(Color.cyan);
