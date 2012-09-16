@@ -16,7 +16,8 @@ public class Main {
         // init game entities
         Level level = Level.sampleLevel();
         gs.setLevel(level);
-        Player player = new Player();
+        Player player = new Player(
+            100, 100, Kernel.TILE_SIZE, Kernel.TILE_SIZE * 2);
         gs.setPlayer(player);
 
         // init graphics
