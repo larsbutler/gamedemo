@@ -2,6 +2,9 @@ package com.larsbutler.gamedemo.models;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.larsbutler.gamedemo.core.Kernel;
 
@@ -95,5 +98,19 @@ public class Level {
                 }
             }
         }
+    }
+
+    public List<Rectangle2D> tileHitBoxes() {
+        List<Rectangle2D> boxes = new ArrayList<Rectangle2D>();
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                if (tiles[row][col] == 1) {
+                    boxes.add(new Rectangle2D.Double(
+                        col * Kernel.TILE_SIZE, row * Kernel.TILE_SIZE,
+                        Kernel.TILE_SIZE, Kernel.TILE_SIZE));
+                }
+            }
+        }
+        return boxes;
     }
 }

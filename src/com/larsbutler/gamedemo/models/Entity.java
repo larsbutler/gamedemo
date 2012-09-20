@@ -1,6 +1,7 @@
 package com.larsbutler.gamedemo.models;
 
 import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
 
 import com.larsbutler.gamedemo.math.State;
 
@@ -89,6 +90,10 @@ public abstract class Entity {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public Rectangle2D rect() {
+        return new Rectangle2D.Double(xState.p, yState.p, (double)width, (double)height);
     }
 
     public abstract void render(Graphics g, double alpha);
