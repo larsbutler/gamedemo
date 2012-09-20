@@ -93,7 +93,7 @@ public class Kernel implements KeyListener, Runnable {
                 accum -= dt;
             }
 
-            // blending factor, in case we're "half-way" between
+            // blending factor, in case we're part-way between
             // physics states
             double alpha = accum / (double)dt;
             gc.setAlpha(alpha);
