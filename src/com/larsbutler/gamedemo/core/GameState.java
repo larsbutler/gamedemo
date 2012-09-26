@@ -1,9 +1,13 @@
 package com.larsbutler.gamedemo.core;
 
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 import com.larsbutler.gamedemo.math.Acceleration;
+import com.larsbutler.gamedemo.math.Collision;
 import com.larsbutler.gamedemo.math.MathUtil;
 import com.larsbutler.gamedemo.math.RK4;
 import com.larsbutler.gamedemo.math.State;
@@ -11,7 +15,7 @@ import com.larsbutler.gamedemo.models.Entity;
 import com.larsbutler.gamedemo.models.Level;
 import com.larsbutler.gamedemo.models.Player;
 
-public class GameState {
+public class GameState implements KeyListener {
 
     private Level level;
     private Player player;
@@ -42,7 +46,42 @@ public class GameState {
     public void update(long prevTimeStep, long timeStepNanos) {
         double t = (double)prevTimeStep / Kernel.NANOS_PER_SECOND;
         double dt = (double)timeStepNanos / Kernel.NANOS_PER_SECOND;
+
+        updateCharacter(player, dt);
         move(player, t, dt);
+    }
+
+    public static void updateCharacter(Player p, double dt) {
+
+        State state = p.getXState();
+
+        if (p.isLeft() && p.isRight()) {
+            state.v = 0.0;
+        }
+        else if (p.isLeft()) {
+            state.v += -(Player.CEL_PER_SECOND * dt);
+        }
+        else if (p.isRight()) {
+            state.v += (Player.CEL_PER_SECOND * dt);
+        }
+        else {
+            // we're moving right
+            // reduce the overall speed
+            if (state.v > 0.0) {
+                state.v +=  -(Player.CEL_PER_SECOND * dt);
+                if (state.v < 0.0) {
+                    state.v = 0.0;
+                }
+            }
+            // we're moving left
+            // reduce the overall speed
+            else if (state.v < 0.0) {
+                state.v += (Player.CEL_PER_SECOND * dt);
+                if (state.v > 0.0) {
+                    state.v = 0.0;
+                }
+            }
+        }
     }
 
     public void move(Entity e, double t, double dt) {
@@ -58,49 +97,56 @@ public class GameState {
         e.setXState(
             RK4.integrate(currentXState, t, dt, Acceleration.EMPTY));
         for (Rectangle2D box : levelHitBoxes) {
-            correction = getCollisionCorrection(e, box, MathUtil.XAXIS);
-            e.setX(e.getX() + correction);
+            correction = Collision.getXCorrection(e, box);
+            if (correction != 0.0) {
+                e.getXState().p += correction;
+                // Since we hit something, zero the velocity
+                // on this axis:
+                e.getXState().v = 0.0;
+            }
         }
 
         e.setYState(
             RK4.integrate(currentYState, t, dt, Acceleration.GRAVITY_ONLY));
         for (Rectangle2D box : levelHitBoxes) {
-            correction = getCollisionCorrection(e, box, MathUtil.YAXIS);
-            e.setY(e.getY() + correction);
+            correction = Collision.getYCorrection(e, box);
+            if (correction != 0.0) {
+                e.getYState().p += correction;
+                // Since we hit something, zero the velocity
+                // on this axis:
+                e.getYState().v = 0.0;
+            }
         }
     }
 
-    public static double getCollisionCorrection(Entity e, Rectangle2D hitBox, int axis) {
-        // TODO: This is an incredibly over-simplified collision
-        // detection/response procedure. This will break if the entity
-        // is moving very fast.
-        // It's possible for the entity to pass right through walls,
-        // floors, etc.
-        double correction = 0.0;
-        Rectangle2D intersection = e.rect().createIntersection(hitBox);
-        if (!intersection.isEmpty()) {
-            // there is a collision
-            if (axis == MathUtil.XAXIS) {
-                correction = intersection.getWidth();
-                // figure out the direction--along the given axis--to correct
-                if (e.getXState().v > 0) {
-                    // entity is moving to the right
-                    // correct left
-                    correction *= -1;
-                }
-            }
-            else if (axis == MathUtil.YAXIS) {
-                correction = intersection.getHeight();
-                // NOTE: In java2d, the origin of the graphics coord system
-                // is in the upper left. Y increases downward
-                if (e.getYState().v > 0) {
-                    // entity is moving down
-                    // correct up
-                    correction *= -1;
-                }
-            }
+    public void keyPressed(KeyEvent e) {
+        int kc = e.getKeyCode();
+
+        switch (kc) {
+            case KeyEvent.VK_LEFT:
+                player.setLeft(true);
+                break;
+            case KeyEvent.VK_RIGHT:
+                player.setRight(true);
+                break;
+
         }
-        return correction;
     }
+
+    public void keyReleased(KeyEvent e) {
+        int kc = e.getKeyCode();
+
+        switch (kc) {
+            case KeyEvent.VK_LEFT:
+                player.setLeft(false);
+                break;
+            case KeyEvent.VK_RIGHT:
+                player.setRight(false);
+                break;
+
+        }
+    }
+
+    public void keyTyped(KeyEvent e) {}
 
 }

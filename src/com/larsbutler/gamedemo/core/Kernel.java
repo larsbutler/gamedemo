@@ -133,10 +133,14 @@ public class Kernel implements KeyListener, Runnable {
             case KeyEvent.VK_P:
                 setPaused(!isPaused());
                 break;
+            default:
+                gameState.keyPressed(e);
+
         }
     }
 
     public void keyReleased(KeyEvent e) {
+        gameState.keyReleased(e);
     }
 
     public void keyTyped(KeyEvent e) {}

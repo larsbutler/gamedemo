@@ -22,4 +22,32 @@ public class MathUtil {
     public static double u(double a, double s, double v) {
         return Math.sqrt(Math.pow(v, 2)  -2 * a * s);
     }
+
+    public static double max(double... objects) {
+        if (objects.length == 0) {
+            throw new RuntimeException("Input to `max` cannot be an empty array");
+        }
+
+        double maxSoFar = objects[0];
+        for (int i = 1; i < objects.length; i++) {
+            if (objects[i] > maxSoFar) {
+                maxSoFar = objects[i];
+            }
+        }
+        return maxSoFar;
+    }
+
+    public static double min(double... objects) {
+        if (objects.length == 0) {
+            throw new RuntimeException("Input to `min` cannot be an empty array");
+        }
+
+        double minSoFar = objects[0];
+        for (int i = 1; i < objects.length; i++) {
+            if (objects[i] < minSoFar) {
+                minSoFar = objects[i];
+            }
+        }
+        return minSoFar;
+    }
 }

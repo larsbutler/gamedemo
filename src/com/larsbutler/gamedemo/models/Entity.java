@@ -96,5 +96,9 @@ public abstract class Entity {
         return new Rectangle2D.Double(xState.p, yState.p, (double)width, (double)height);
     }
 
+    public Rectangle2D prevRect() {
+        return new Rectangle2D.Double(prevXState.p, prevYState.p, (double)width, (double)height);
+    }
+
     public abstract void render(Graphics g, double alpha);
 }
