@@ -1,5 +1,7 @@
 package com.larsbutler.gamedemo.math;
 
+import com.larsbutler.simplat.phys.State;
+
 public class MathUtil {
 
     /**
@@ -49,5 +51,19 @@ public class MathUtil {
             }
         }
         return minSoFar;
+    }
+
+    /**
+     * Given an alpha value in the interval [0.0, 1.0],
+     * interpolate between the previous and current states
+     * and get adjusted position for rendering.
+     */
+    public static double getRenderPosition(
+            State prevState, State currentState, double alpha) {
+        if (alpha < 0.0 || alpha > 1.0) {
+            throw new IllegalArgumentException(
+                    "Alpha must be in the interval [0.0, 1.0].");
+        }
+        return currentState.p * alpha + prevState.p * (1 - alpha);
     }
 }
