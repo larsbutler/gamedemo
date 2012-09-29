@@ -8,7 +8,7 @@ import com.larsbutler.gamedemo.math.MathUtil;
 public class Player extends Entity {
 
     public static double MAX_XVEL_PER_UPDATE = 500;
-    public static double CEL_PER_SECOND = 1000;  // accel/decel per second
+    public static double CEL_PER_SECOND = 2000;  // accel/decel per second
     /**
      * Jump y-axis displacement.
      */
