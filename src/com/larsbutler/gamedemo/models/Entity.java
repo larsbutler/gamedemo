@@ -15,6 +15,8 @@ public abstract class Entity {
     protected int width;
     protected int height;
 
+    protected boolean canJump;
+
     public Entity(double x, double y, int width, int height) {
         xState = new State();
         xState.p = x;
@@ -92,6 +94,14 @@ public abstract class Entity {
         this.height = height;
     }
 
+    public boolean canJump() {
+        return canJump;
+    }
+
+    public void setCanJump(boolean canJump) {
+        this.canJump = canJump;
+    }
+
     public Rectangle2D rect() {
         return new Rectangle2D.Double(xState.p, yState.p, (double)width, (double)height);
     }
@@ -99,6 +109,16 @@ public abstract class Entity {
     public Rectangle2D prevRect() {
         return new Rectangle2D.Double(prevXState.p, prevYState.p, (double)width, (double)height);
     }
+
+    public double getMaxAbsXVel() {
+        return Double.POSITIVE_INFINITY;
+    }
+
+    public double getMaxAbsYVel() {
+        return Double.POSITIVE_INFINITY;
+    }
+
+    public abstract void jump();
 
     public abstract void render(Graphics g, double alpha);
 }
