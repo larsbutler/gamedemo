@@ -50,9 +50,13 @@ public class Player extends Entity {
     }
 
     public void render(Graphics g, double alpha) {
+        double renderX, renderY;
+        renderX = MathUtil.getRenderPosition(prevXState, xState, alpha);
+        renderY = MathUtil.getRenderPosition(prevYState, yState, alpha);
+
         g.setColor(Color.orange);
         g.fillRect(
-            (int)Math.round(getX()), (int)Math.round(getY()),
+            (int)Math.round(renderX), (int)Math.round(renderY),
             getWidth(), getHeight());
     }
 
