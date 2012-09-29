@@ -47,11 +47,11 @@ public class GameState implements KeyListener {
         double t = (double)prevTimeStep / Kernel.NANOS_PER_SECOND;
         double dt = (double)timeStepNanos / Kernel.NANOS_PER_SECOND;
 
-        updateCharacter(player, dt);
+        updatePlayer(player, dt);
         move(player, t, dt);
     }
 
-    public static void updateCharacter(Player p, double dt) {
+    public static void updatePlayer(Player p, double dt) {
 
         State state = p.getXState();
 
@@ -60,9 +60,17 @@ public class GameState implements KeyListener {
         }
         else if (p.isLeft()) {
             state.v += -(Player.CEL_PER_SECOND * dt);
+            // Cap the movement speed to the maximum allowed
+            if (state.v <= -Player.MAX_XVEL_PER_UPDATE) {
+                state.v = -Player.MAX_XVEL_PER_UPDATE;
+            }
         }
         else if (p.isRight()) {
             state.v += (Player.CEL_PER_SECOND * dt);
+            // Cap the movement speed to the maximum allowed
+            if (state.v >= Player.MAX_XVEL_PER_UPDATE) {
+                state.v = Player.MAX_XVEL_PER_UPDATE;
+            }
         }
         else {
             // we're moving right
@@ -106,17 +114,31 @@ public class GameState implements KeyListener {
             }
         }
 
+        System.err.println();
+        System.err.println("Before moving: " + e.getY() + ", " + (e.getY() + e.getHeight()));
         e.setYState(
             RK4.integrate(currentYState, t, dt, Acceleration.GRAVITY_ONLY));
+        System.err.println("After moving: " + e.getY() + ", " + (e.getY() + e.getHeight()));
+        boolean floorColl = false;
         for (Rectangle2D box : levelHitBoxes) {
             correction = Collision.getYCorrection(e, box);
             if (correction != 0.0) {
+                System.err.println("Correction: " + correction);
+//                e.getYState().p = (double)(float)(e.getYState().p + correction);
                 e.getYState().p += correction;
+                // if we hit a "floor",
+                // reset `canJump` status:
+                if (e.getYState().v > 0.0) {
+                    // we were falling
+                    floorColl = true;
+                }
                 // Since we hit something, zero the velocity
                 // on this axis:
                 e.getYState().v = 0.0;
             }
         }
+        System.err.println("After correction: " + e.getY() + ", " + (e.getY() + e.getHeight()));
+        e.setCanJump(floorColl);
     }
 
     public void keyPressed(KeyEvent e) {
@@ -129,7 +151,9 @@ public class GameState implements KeyListener {
             case KeyEvent.VK_RIGHT:
                 player.setRight(true);
                 break;
-
+            case KeyEvent.VK_SPACE:
+                player.jump();
+                break;
         }
     }
 
@@ -143,7 +167,6 @@ public class GameState implements KeyListener {
             case KeyEvent.VK_RIGHT:
                 player.setRight(false);
                 break;
-
         }
     }
 
