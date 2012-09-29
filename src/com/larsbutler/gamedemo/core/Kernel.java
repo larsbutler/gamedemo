@@ -1,13 +1,12 @@
 package com.larsbutler.gamedemo.core;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 
-import com.larsbutler.gamedemo.graphics.GameCanvas;
-import com.larsbutler.gamedemo.graphics.Display;
+import com.larsbutler.gamedemo.graphics.DisplayProxy;
 
 
-public class Kernel implements KeyListener, Runnable {
+public class Kernel implements Runnable {
 
     public static final long NANOS_PER_SECOND = 1000000000;
 
@@ -26,8 +25,8 @@ public class Kernel implements KeyListener, Runnable {
 
     private static final Kernel instance = new Kernel();
     private final GameState gameState = new GameState();
+    private static DisplayProxy dispProxy = null;
 
-    private Display display;
     private boolean paused;
 
     private Kernel() {
@@ -40,14 +39,6 @@ public class Kernel implements KeyListener, Runnable {
 
     public GameState gameState() {
         return gameState;
-    }
-
-    public Display getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(Display display) {
-        this.display = display;
     }
 
     public boolean isPaused() {
@@ -66,14 +57,14 @@ public class Kernel implements KeyListener, Runnable {
      * Design copied (and modified) with permission.
      */
     public void run() {
+        dispProxy = new DisplayProxy();
+
         long t = 0;
         long dt = UPDATE_RATE_NANOS;
         long currentTime = System.nanoTime();
         long accum = 0;
 
-        GameCanvas gc = display.getGameCanvas();
-
-        while (true) {
+        while (!Display.isCloseRequested()) {
             long newTime = System.nanoTime();
             // produced frame time (for simulation consumption)
             long pauseTime = pause();
@@ -96,11 +87,19 @@ public class Kernel implements KeyListener, Runnable {
             // blending factor, in case we're part-way between
             // physics states
             double alpha = accum / (double)dt;
-            gc.setAlpha(alpha);
-            gc.repaint();
-            gc.measureFps();
+            // Clear the screen and depth buffer
+            // if you don't do this, you can accidentally draw
+            // random stuff from video memory.. which is cool,
+            // but not very useful =)
+            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+            dispProxy.render(alpha);
+            dispProxy.measureFps();
+
+            Display.update();
         }
 
+        Display.destroy();
+        System.exit(0);
     }
 
     /**
@@ -126,22 +125,4 @@ public class Kernel implements KeyListener, Runnable {
         }
     }
 
-    public void keyPressed(KeyEvent e) {
-        int kc = e.getKeyCode();
-
-        switch (kc) {
-            case KeyEvent.VK_P:
-                setPaused(!isPaused());
-                break;
-            default:
-                gameState.keyPressed(e);
-
-        }
-    }
-
-    public void keyReleased(KeyEvent e) {
-        gameState.keyReleased(e);
-    }
-
-    public void keyTyped(KeyEvent e) {}
 }

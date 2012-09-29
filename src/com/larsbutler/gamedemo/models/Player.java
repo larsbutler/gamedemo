@@ -1,7 +1,6 @@
 package com.larsbutler.gamedemo.models;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import org.lwjgl.opengl.GL11;
 
 import com.larsbutler.gamedemo.math.MathUtil;
 
@@ -49,15 +48,20 @@ public class Player extends Entity {
         return MAX_XVEL_PER_UPDATE;
     }
 
-    public void render(Graphics g, double alpha) {
+    public void render(double alpha) {
         double renderX, renderY;
         renderX = MathUtil.getRenderPosition(prevXState, xState, alpha);
         renderY = MathUtil.getRenderPosition(prevYState, yState, alpha);
 
-        g.setColor(Color.orange);
-        g.fillRect(
-            (int)Math.round(renderX), (int)Math.round(renderY),
-            getWidth(), getHeight());
+        GL11.glColor3f(1.0f, 0.8f, 0.0f);
+        {
+            GL11.glBegin(GL11.GL_QUADS);
+            GL11.glVertex2d(renderX, renderY);
+            GL11.glVertex2d(renderX, renderY + getHeight());
+            GL11.glVertex2d(renderX + getWidth(), renderY + getHeight());
+            GL11.glVertex2d(renderX + getWidth(), renderY);
+            GL11.glEnd();
+        }
     }
 
 }

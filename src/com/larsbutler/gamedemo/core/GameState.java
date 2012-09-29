@@ -1,21 +1,18 @@
 package com.larsbutler.gamedemo.core;
 
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 import com.larsbutler.gamedemo.math.Acceleration;
 import com.larsbutler.gamedemo.math.Collision;
-import com.larsbutler.gamedemo.math.MathUtil;
 import com.larsbutler.gamedemo.math.RK4;
 import com.larsbutler.gamedemo.math.State;
 import com.larsbutler.gamedemo.models.Entity;
 import com.larsbutler.gamedemo.models.Level;
 import com.larsbutler.gamedemo.models.Player;
 
-public class GameState implements KeyListener {
+public class GameState {
 
     private Level level;
     private Player player;
@@ -135,36 +132,5 @@ public class GameState implements KeyListener {
         }
         e.setCanJump(floorColl);
     }
-
-    public void keyPressed(KeyEvent e) {
-        int kc = e.getKeyCode();
-
-        switch (kc) {
-            case KeyEvent.VK_LEFT:
-                player.setLeft(true);
-                break;
-            case KeyEvent.VK_RIGHT:
-                player.setRight(true);
-                break;
-            case KeyEvent.VK_SPACE:
-                player.jump();
-                break;
-        }
-    }
-
-    public void keyReleased(KeyEvent e) {
-        int kc = e.getKeyCode();
-
-        switch (kc) {
-            case KeyEvent.VK_LEFT:
-                player.setLeft(false);
-                break;
-            case KeyEvent.VK_RIGHT:
-                player.setRight(false);
-                break;
-        }
-    }
-
-    public void keyTyped(KeyEvent e) {}
 
 }

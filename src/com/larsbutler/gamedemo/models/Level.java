@@ -1,10 +1,11 @@
 package com.larsbutler.gamedemo.models;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.lwjgl.opengl.GL11;
 
 import com.larsbutler.gamedemo.core.Kernel;
 
@@ -50,9 +51,9 @@ public class Level {
         lvl.set(6, 4, 1);
 
         // another floating platform
-        lvl.set(9, 5, 1);
-        lvl.set(9, 6, 1);
-        lvl.set(9, 7, 1);
+        lvl.set(3, 5, 1);
+        lvl.set(3, 6, 1);
+        lvl.set(3, 7, 1);
         return lvl;
     }
 
@@ -80,31 +81,25 @@ public class Level {
         tiles[row][col] = value;
     }
 
-    public void render(Graphics g, double alpha) {
-        // draw the level background
-        g.setColor(Color.black);
-        g.fillRect(0, 0, width, height);
-
+    public void render(double alpha) {
+        GL11.glColor3f(0.3f, 0.3f, 0.3f);
         // draw the tiles
-        g.fillRect(0, 0, 100, 100);
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 // If this tile has a value of 1, draw it
                 // Otherwise, ignore it
                 if (tiles[row][col] == 1) {
-                    g.setColor(Color.GRAY);
-                    g.fillRect(
-                        col * Kernel.TILE_SIZE,
-                        row * Kernel.TILE_SIZE,
-                        Kernel.TILE_SIZE,
-                        Kernel.TILE_SIZE);
-                    // Draw a small white outline around each tile,
-                    // to highlight each cell
-                    g.setColor(Color.WHITE);
-                    g.drawRect(col * Kernel.TILE_SIZE,
-                        row * Kernel.TILE_SIZE,
-                        Kernel.TILE_SIZE,
-                        Kernel.TILE_SIZE);
+                    {
+                        GL11.glBegin(GL11.GL_QUADS);
+                        GL11.glVertex2d(col * Kernel.TILE_SIZE, row * Kernel.TILE_SIZE);
+                        GL11.glVertex2d(col * Kernel.TILE_SIZE, row * Kernel.TILE_SIZE + Kernel.TILE_SIZE);
+                        GL11.glVertex2d(col * Kernel.TILE_SIZE + Kernel.TILE_SIZE, row * Kernel.TILE_SIZE + Kernel.TILE_SIZE);
+                        GL11.glVertex2d(col * Kernel.TILE_SIZE + Kernel.TILE_SIZE, row * Kernel.TILE_SIZE);
+                        GL11.glRectd(
+                            col * Kernel.TILE_SIZE, row * Kernel.TILE_SIZE,
+                            col * Kernel.TILE_SIZE + Kernel.TILE_SIZE, row * Kernel.TILE_SIZE + Kernel.TILE_SIZE);
+                        GL11.glEnd();
+                    }
                 }
             }
         }

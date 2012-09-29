@@ -1,6 +1,5 @@
 package com.larsbutler.gamedemo.models;
 
-import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 
 import com.larsbutler.gamedemo.math.State;
@@ -120,5 +119,5 @@ public abstract class Entity {
 
     public abstract void jump();
 
-    public abstract void render(Graphics g, double alpha);
+    public abstract void render(double alpha);
 }

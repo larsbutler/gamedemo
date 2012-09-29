@@ -2,8 +2,6 @@ package com.larsbutler.gamedemo;
 
 import com.larsbutler.gamedemo.core.GameState;
 import com.larsbutler.gamedemo.core.Kernel;
-import com.larsbutler.gamedemo.graphics.GameCanvas;
-import com.larsbutler.gamedemo.graphics.Display;
 import com.larsbutler.gamedemo.models.Level;
 import com.larsbutler.gamedemo.models.Player;
 
@@ -17,14 +15,9 @@ public class Main {
         Level level = Level.sampleLevel();
         gs.setLevel(level);
         Player player = new Player(
-            100, 100, Kernel.TILE_SIZE, Kernel.TILE_SIZE * 2);
+            100, 200, Kernel.TILE_SIZE, Kernel.TILE_SIZE * 2);
         gs.setPlayer(player);
 
-        // init graphics
-        Display disp = new Display();
-        disp.addKeyListener(disp);
-
-        kernel.setDisplay(disp);
         Thread mainThread = new Thread(kernel);
         mainThread.start();
     }

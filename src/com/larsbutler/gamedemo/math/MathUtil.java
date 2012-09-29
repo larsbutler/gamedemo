@@ -7,7 +7,7 @@ public class MathUtil {
     /**
      * Gravity, in pixels/second^2.
      */
-    public static final double GRAVITY = 4000;
+    public static final double GRAVITY = -4000;
     public static final int XAXIS = 0;
     public static final int YAXIS = 1;
 
