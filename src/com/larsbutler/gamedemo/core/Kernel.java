@@ -89,7 +89,6 @@ public class Kernel implements Runnable {
             if (isPaused()) {
                 drawPauseScreen();
                 frameTime = 0;
-//                Display.update();
             }
             else {
                 // produced frame time (for simulation consumption)
