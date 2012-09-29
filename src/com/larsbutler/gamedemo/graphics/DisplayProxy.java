@@ -80,7 +80,11 @@ public class DisplayProxy {
 
         gs.getLevel().render(alpha);
         gs.getPlayer().render(alpha);
-        System.out.println("FPS: " + Math.round(getFps()));
+        // Enable this to see framerate.
+        // I disabled by default because the spam is annoying
+        // and LWJGL doesn't support font rendering (so I can't
+        // just draw text to the display).
+        // System.out.println("FPS: " + Math.round(getFps()));
     }
 
 }
