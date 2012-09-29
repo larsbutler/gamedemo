@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="compile"
+         name="Create a runnable jar for GameDemo">
+
+    <!-- ANT 1.7 or greater is required -->
+    <!-- This file was initially created by Eclipse Runnable JAR Export Wizard,
+         but was edited by hand. -->
+
+    <!-- Name for built jar -->
+    <property name="dist.file" value="GameDemo.jar" />
+    <!-- Location of compiled .class files -->
+    <property name="bin.dir" value="bin" />
+    <!-- Location of application source code (not including test code) -->
+    <property name="src.dir" value="src" />
+
+    <!-- Function to check if the bin/ dir exists -->
+    <target name="_bin_dir_exists" description="check if the bin/ dir exists">
+        <condition property="p_bin_dir_exists">
+            <available file="${bin.dir}" type="dir" />
+        </condition>
+    </target>
+
+    <!-- Clean bin artifacts -->
+    <target name="clean_bin" depends="_bin_dir_exists"
+            if="p_bin_dir_exists" description="Clean compiled artifacts (.class files)">
+        <delete dir="${bin.dir}" />
+    </target>
+
+    <!-- Function to check if the dist file exists -->
+    <target name="_dist_file_exists" description="check if ${dist.file} exists">
+        <condition property="p_dist_file_exists">
+            <available file="GameDemo.jar" type="file" />
+        </condition>
+    </target>
+
+    <!-- Clean dist artifacts -->
+    <target name="clean_dist" depends="_dist_file_exists"
+            if="p_dist_file_exists" description="Clean the built .jar">
+        <delete dir="${dist.dir}" />
+    </target>
+
+    <!-- Clean compile artifacts (not dist) -->
+    <target name="clean" depends="clean_bin,clean_dist" />
+
+    <!-- Compile source -->
+    <target name="compile_src" depends="clean" description="Compile java classes">
+        <mkdir dir="${bin.dir}" />
+        <javac srcdir="${src.dir}" destdir="${bin.dir}" includeAntRuntime="false" />
+    </target>
+
+    <!-- Build the jar and place it in the current dir -->
+    <target name="compile" depends="compile_src">
+        <jar destfile="GameDemo.jar">
+            <manifest>
+                <attribute name="Main-Class" value="com.larsbutler.gamedemo.Main" />
+            </manifest>
+            <fileset dir="${bin.dir}" />
+        </jar>
+    </target>
+</project>
