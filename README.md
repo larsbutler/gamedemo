@@ -5,17 +5,22 @@ The following steps are required to build and run the jar.
 project config may need to be adjusted to suit your environment.)
 
 1. Build the jar: $ ant
+
    (ant is of course required)
+
 2. Symlink or copy the appropriate native lib for LWJGL to this dir.
+
    Example:
 
     $ ln -s lib/lwjgl/native/macosx/liblwjgl.jnilib
+
     or
+
     $ cp lib/lwjgl/native/macosx/liblwjgl.jnilib ./
+
 3. Run the jar:
 
     $ java -jar GameDemo.jar
-
 
 PLEASE NOTE:
 
@@ -26,6 +31,9 @@ to have your feedback so I can improve this.
 ## Game controls
 
 Spacebar: Jump
+
 Left arrow: Move left
+
 Right arrow: Move right
+
 P: Pause/unpause
