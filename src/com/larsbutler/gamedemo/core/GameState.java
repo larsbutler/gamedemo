@@ -114,18 +114,14 @@ public class GameState implements KeyListener {
             }
         }
 
-        System.err.println();
-        System.err.println("Before moving: " + e.getY() + ", " + (e.getY() + e.getHeight()));
         e.setYState(
             RK4.integrate(currentYState, t, dt, Acceleration.GRAVITY_ONLY));
-        System.err.println("After moving: " + e.getY() + ", " + (e.getY() + e.getHeight()));
         boolean floorColl = false;
         for (Rectangle2D box : levelHitBoxes) {
             correction = Collision.getYCorrection(e, box);
             if (correction != 0.0) {
-                System.err.println("Correction: " + correction);
-//                e.getYState().p = (double)(float)(e.getYState().p + correction);
-                e.getYState().p += correction;
+                e.getYState().p = (double)(float)(e.getYState().p + correction);
+//                e.getYState().p += correction;
                 // if we hit a "floor",
                 // reset `canJump` status:
                 if (e.getYState().v > 0.0) {
@@ -137,7 +133,6 @@ public class GameState implements KeyListener {
                 e.getYState().v = 0.0;
             }
         }
-        System.err.println("After correction: " + e.getY() + ", " + (e.getY() + e.getHeight()));
         e.setCanJump(floorColl);
     }
 
