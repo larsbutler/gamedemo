@@ -1,6 +1,6 @@
 package com.larsbutler.gamedemo.math;
 
-import com.larsbutler.simplat.phys.State;
+import com.larsbutler.gamedemo.math.State;
 
 public class MathUtil {
 
