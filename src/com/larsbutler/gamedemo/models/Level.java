@@ -43,6 +43,16 @@ public class Level {
         for (int i = 1; i < 12; i++) {
             lvl.set(i, 16, 1);
         }
+
+        // floating platform
+        lvl.set(6, 2, 1);
+        lvl.set(6, 3, 1);
+        lvl.set(6, 4, 1);
+
+        // another floating platform
+        lvl.set(9, 5, 1);
+        lvl.set(9, 6, 1);
+        lvl.set(9, 7, 1);
         return lvl;
     }
 
