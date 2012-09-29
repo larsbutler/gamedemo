@@ -38,7 +38,7 @@ public class Player extends Entity {
 
     public void jump() {
         if (canJump) {
-            this.getYState().v = -MathUtil.u(-MathUtil.GRAVITY, JUMP_HEIGHT, 0.0);
+            this.getYState().v = MathUtil.u(MathUtil.GRAVITY, JUMP_HEIGHT, 0.0);
             canJump = false;
         }
     }

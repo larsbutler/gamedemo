@@ -4,6 +4,8 @@ package com.larsbutler.gamedemo.core;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
+import org.lwjgl.input.Keyboard;
+
 import com.larsbutler.gamedemo.math.Acceleration;
 import com.larsbutler.gamedemo.math.Collision;
 import com.larsbutler.gamedemo.math.RK4;
@@ -121,7 +123,7 @@ public class GameState {
 //                e.getYState().p += correction;
                 // if we hit a "floor",
                 // reset `canJump` status:
-                if (e.getYState().v > 0.0) {
+                if (e.getYState().v < 0.0) {
                     // we were falling
                     floorColl = true;
                 }
@@ -131,6 +133,39 @@ public class GameState {
             }
         }
         e.setCanJump(floorColl);
+    }
+
+    /**
+     * We pass the code _and_ the character, in the case of keys like
+     * ~ and ` (which both have a keycode of 0).
+     */
+    public void keyPressed(int keycode, char keychar) {
+        switch (keycode) {
+            case Keyboard.KEY_SPACE:
+                player.jump();
+                break;
+            case Keyboard.KEY_LEFT:
+                player.setLeft(true);
+                break;
+            case Keyboard.KEY_RIGHT:
+                player.setRight(true);
+                break;
+        }
+    }
+
+    /**
+     * We pass the code _and_ the character, in the case of keys like
+     * ~ and ` (which both have a keycode of 0).
+     */
+    public void keyReleased(int keycode, char keychar) {
+        switch (keycode) {
+            case Keyboard.KEY_LEFT:
+                player.setLeft(false);
+                break;
+            case Keyboard.KEY_RIGHT:
+                player.setRight(false);
+                break;
+        }
     }
 
 }

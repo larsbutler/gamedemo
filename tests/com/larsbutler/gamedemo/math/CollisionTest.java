@@ -59,10 +59,10 @@ public class CollisionTest {
     }
 
     @Test
-    public void testGetYCorrectionFalling() {
+    public void testGetYCorrectionRising() {
         Player p = new Player(0.0, 70.0, 20, 20);
         p.getPrevYState().p = 0.0;
-        p.getYState().v = 70.0;  // positive y velocity -> falling
+        p.getYState().v = 70.0;  // positive y velocity -> rising
         Rectangle2D.Double hitBox = new Rectangle2D.Double(
             10.0, 40.0, 60.0, 10.0);
 
@@ -70,10 +70,10 @@ public class CollisionTest {
     }
 
     @Test
-    public void testGetYCorrectionRising() {
+    public void testGetYCorrectionFalling() {
         Player p = new Player(0.0, 0.0, 20, 20);
         p.getPrevYState().p = 70.0;
-        p.getYState().v = -70.0;  // negative y velocity -> rising
+        p.getYState().v = -70.0;  // negative y velocity -> falling
         Rectangle2D.Double hitBox = new Rectangle2D.Double(
             10.0, 40.0, 60.0, 10.0);
 

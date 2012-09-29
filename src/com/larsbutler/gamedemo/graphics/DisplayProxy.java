@@ -80,22 +80,7 @@ public class DisplayProxy {
 
         gs.getLevel().render(alpha);
         gs.getPlayer().render(alpha);
-
-        // draw HUD
-        if (k.isPaused()) {
-            // draw a translucent overlay to indicate
-            // the paused state
-            GL11.glColor4f(0.4f, 0.2f, 0.2f, 0.5f);
-            {
-                GL11.glBegin(GL11.GL_QUADS);
-                GL11.glVertex2d(0, 0);
-                GL11.glVertex2d(0, 624);
-                GL11.glVertex2d(816, 624);
-                GL11.glVertex2d(816, 0);
-                GL11.glEnd();
-            }
-        }
-//        g.drawString(String.format("FPS: %d", Math.round(fps)), 5, 25);
+        System.out.println("FPS: " + Math.round(getFps()));
     }
 
 }

@@ -15,7 +15,7 @@ public class Main {
         Level level = Level.sampleLevel();
         gs.setLevel(level);
         Player player = new Player(
-            100, 200, Kernel.TILE_SIZE, Kernel.TILE_SIZE * 2);
+            400, 400, Kernel.TILE_SIZE, Kernel.TILE_SIZE * 2);
         gs.setPlayer(player);
 
         Thread mainThread = new Thread(kernel);
