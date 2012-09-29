@@ -1,3 +1,10 @@
+## Want the OpenGL version?
+
+There's OpenGL adaptation of this demo in the branch `opengl`.
+
+It uses LWJGL (http://lwjgl.org) for rendering, instead of Java's
+built-in Swing/AWT components.
+
 ## Building and running
 
 The following steps are required to build and run the jar.
