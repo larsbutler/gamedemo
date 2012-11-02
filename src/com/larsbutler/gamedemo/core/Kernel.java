@@ -14,7 +14,7 @@ public class Kernel implements Runnable {
     /**
      * Nanoseconds per update (independent from render rate).
      */
-    public static final long UPDATE_RATE_NANOS = NANOS_PER_SECOND / 60;  // 100 updates/sec
+    public static final long UPDATE_RATE_NANOS = NANOS_PER_SECOND / 100;  // 100 updates/sec
     
     /**
      * When the game is paused, sleep for this long before checking the pause
