@@ -120,10 +120,9 @@ public class GameState {
             correction = Collision.getYCorrection(e, box);
             if (correction != 0.0) {
                 e.getYState().p = (double)(float)(e.getYState().p + correction);
-//                e.getYState().p += correction;
                 // if we hit a "floor",
                 // reset `canJump` status:
-                if (e.getYState().v < 0.0) {
+                if (e.getYState().v > 0.0) {
                     // we were falling
                     floorColl = true;
                 }

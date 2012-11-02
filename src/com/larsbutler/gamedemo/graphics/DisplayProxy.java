@@ -39,7 +39,7 @@ public class DisplayProxy {
         // Initialize OpenGL
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glLoadIdentity();
-        GL11.glOrtho(0, 816, 0, 624, 1, -1);
+        GL11.glOrtho(0, 816, 624, 0, 1, -1);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
         // Synchronize the render rate with the display's
         // refresh rate.

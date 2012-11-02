@@ -51,9 +51,9 @@ public class Level {
         lvl.set(6, 4, 1);
 
         // another floating platform
-        lvl.set(3, 5, 1);
-        lvl.set(3, 6, 1);
-        lvl.set(3, 7, 1);
+        lvl.set(9, 5, 1);
+        lvl.set(9, 6, 1);
+        lvl.set(9, 7, 1);
         return lvl;
     }
 
