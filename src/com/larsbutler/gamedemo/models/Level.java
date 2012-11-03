@@ -1,6 +1,5 @@
 package com.larsbutler.gamedemo.models;
 
-import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;

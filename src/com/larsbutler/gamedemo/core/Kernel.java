@@ -72,7 +72,6 @@ public class Kernel implements Runnable {
 
             long newTime = System.nanoTime();
             
-//            long pauseTime = pause();
             // Draw a normal frame
             // blending factor, in case we're part-way between
             // physics states
@@ -99,7 +98,7 @@ public class Kernel implements Runnable {
             // If we don't do this, nothing gets drawn.
             Display.update();
 
-            // TODO: add spiral of death protection
+            // TODO: add "spiral of death" protection
             currentTime = newTime;
 
             accum += frameTime;
