@@ -43,6 +43,7 @@ public class GameState {
      *            timeStepNanos == 1/60 sec, we do physics updates for 1/60 sec.
      */
     public void update(long prevTimeStep, long timeStepNanos) {
+        // Convert from nanoseconds to seconds:
         double t = (double)prevTimeStep / Kernel.NANOS_PER_SECOND;
         double dt = (double)timeStepNanos / Kernel.NANOS_PER_SECOND;
 
