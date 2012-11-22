@@ -6,6 +6,15 @@ import com.larsbutler.gamedemo.models.Entity;
 
 public class Collision {
 
+    /**
+     * Given an entity and the rectangle representing a _potential_ collision,
+     * calculate a correction value.
+     *
+     * If a collision has occurred (on the given axis), the position correction
+     * should be just enough to move the entity out of the collision.
+     *
+     * If there is no collision, the correction will be 0.
+     */
     public static double getYCorrection(Entity e, Rectangle2D hitBox) {
         State yState = e.getYState();
         Rectangle2D pathBox = getYPathBox(e);
@@ -25,6 +34,15 @@ public class Collision {
         return correction;
     }
 
+    /**
+     * Given an entity and the rectangle representing a _potential_ collision,
+     * calculate a correction value.
+     *
+     * If a collision has occurred (on the given axis), the position correction
+     * should be just enough to move the entity out of the collision.
+     *
+     * If there is no collision, the correction will be 0.
+     */
     public static double getXCorrection(Entity e, Rectangle2D hitBox) {
         State xState = e.getXState();
         Rectangle2D pathBox = getXPathBox(e);
@@ -44,6 +62,10 @@ public class Collision {
         return correction;
     }
 
+    /**
+     * Get a rectangle representing the path the entity has taken
+     * (on the Y axis) between its previous state and current state.
+     */
     public static Rectangle2D getYPathBox(Entity e) {
         double prevMin, prevMax;
         double curMin, curMax;
