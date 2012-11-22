@@ -120,8 +120,9 @@ public class GameState implements KeyListener {
         for (Rectangle2D box : levelHitBoxes) {
             correction = Collision.getYCorrection(e, box);
             if (correction != 0.0) {
+                // TODO: ugly hack for rounding errors. Need a permanent solution.
+//              e.getYState().p += correction;
                 e.getYState().p = (double)(float)(e.getYState().p + correction);
-//                e.getYState().p += correction;
                 // if we hit a "floor",
                 // reset `canJump` status:
                 if (e.getYState().v > 0.0) {
